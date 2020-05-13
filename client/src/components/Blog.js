@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { withStyles } from "@material-ui/core/styles";
-// import { Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import Context from '../context';
 import NoContent from './Pin/NoContent';
 import CreatePin from './Pin/CreatePin';
 import PinContent from './Pin/PinContent';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const Blog = ({ classes }) => {
   const { state } = useContext(Context);
   const { draft, currentPin } = state;
+  const mobileSize = useMediaQuery('(max-width: 650px)');
   let BlogContent;
 
   if (!draft && !currentPin) {
@@ -20,9 +22,9 @@ const Blog = ({ classes }) => {
   }
 
   return (
-    <div className={classes.root}>
+    <Paper className={mobileSize ? classes.rootMobile : classes.root}>
       <BlogContent />
-    </div>
+    </Paper>
   );
 };
 

@@ -12,6 +12,7 @@ import differenceInMinutes from 'date-fns/difference_in_minutes';
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Subscription } from 'react-apollo';
 
 const mapboxApiToken = 'pk.eyJ1Ijoia29zdWtlbXVyYW1hdHN1IiwiYSI6ImNqdTR4azhudzBpZnozeW8ycjRkZDl4bWwifQ.gbUCTqtCh0l6WBj9K5mSfQ';
@@ -27,6 +28,7 @@ const INITIAL_VIEWPORT = {
 
 const Map = ({ classes }) => {
   const client = useClient();
+  const mobileSize = useMediaQuery('(max-width: 650px)');
   const { state, dispatch } = useContext(Context);
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
   const [userPosition, setUserPosition] = useState(null);
@@ -83,17 +85,21 @@ const Map = ({ classes }) => {
 
   useEffect(() => {
     getUserPosition();
-  }, []);
-
-  useEffect(() => {
     getPins();
   }, []);
 
+  useEffect(() => {
+    const pinExists = popup && state.pins.findIndex(pin => pin._id === popup._id) > -1;
+
+    if (!pinExists) setPopup(null);
+  }, [state.pins.length]);
+
   return (
-    <div className={classes.root}>
+    <div className={mobileSize ? classes.rootMobile : classes.root}>
       <ReactMapGL
         mapStyle={mapStyleUrl}
         mapboxApiAccessToken={mapboxApiToken}
+        scrollZoom={!mobileSize}
         onViewportChange={newviewport => setViewport(newviewport)}
         onClick={handleMapClick}
         {...viewport}
