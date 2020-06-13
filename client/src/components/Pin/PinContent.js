@@ -40,8 +40,8 @@ const styles = theme => ({
     width: "100%"
   },
   icon: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    marginLeft: theme.spacing(0),
+    marginRight: theme.spacing(0)
   },
   text: {
     display: "flex",

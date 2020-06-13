@@ -63,7 +63,7 @@ const styles = theme => ({
     alignItems: "center"
   },
   icon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(0),
     color: "green",
     fontSize: 45
   },
@@ -73,7 +73,7 @@ const styles = theme => ({
   picture: {
     height: "50px",
     borderRadius: "90%",
-    marginRight: theme.spacing.unit * 2
+    marginRight: theme.spacing(2)
   }
 });
 
